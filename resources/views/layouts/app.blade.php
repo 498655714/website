@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset('dist/layuiadmin/style/admin.css')  }}" media="all">
     @yield('css')
 </head>
-<body>
+<body  class="layui-layout-body">
     @yield('content')
     <script src="{{ asset('dist/layuiadmin/layui/layui.js') }}"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->

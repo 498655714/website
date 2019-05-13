@@ -16,5 +16,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['namespace' => 'Admin'], function () {
+    Route::get('/home', 'HomeController@index')->name('home');//后台主页
+    Route::get('/home/console', 'HomeController@console')->name('console');//后台主页
+});
