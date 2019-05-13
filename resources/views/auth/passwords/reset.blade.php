@@ -7,7 +7,7 @@
         <div class="layadmin-user-login-main">
             <div class="layadmin-user-login-box layadmin-user-login-header">
                 <h2>{{ config('app.name') }}</h2>
-                <p>后台管理系统-注册</p>
+                <p>后台管理系统-密码重置</p>
             </div>
             <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
                 <form action="{{ route('password.request') }}" method="POST">

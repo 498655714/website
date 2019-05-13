@@ -23,7 +23,7 @@
                 </div>
                 <div class="layui-form-item" style="margin-bottom: 30px;">
                     <input type="checkbox" name="remember" lay-skin="primary" title="记住密码" >
-                    <a href="{{ route('password.reset',csrf_token()) }}" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
+                    <a href="{{ route('password.request') }}" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
                 </div>
 
                 <div class="layui-form-item">
