@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title',' | 控制台')
 @section('css')
 @endsection
 @section('content')

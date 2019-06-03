@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title',' | 密码重置')
 @section('css')
     <link rel="stylesheet" href="{{ asset('dist/layuiadmin/style/login.css') }}" media="all">
 @endsection
@@ -46,7 +47,7 @@
             base: '{{ asset("dist/admin/layuiadmin")  }}'+'/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
-        }).use(['form','layer'],function () {
+        }).use(['layer'],function () {
             var layer = layui.layer;
             @include('common._message')
         })

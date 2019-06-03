@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{{ config('app.name'.'后台管理系统','后台管理系统') }}</title>
+    <title>{{ config('app.name').'后台' }}@yield('title')</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">

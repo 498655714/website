@@ -22,5 +22,6 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('superman'),
             'uuid' => \Faker\Provider\Uuid::uuid()
         ]);
+        
     }
 }

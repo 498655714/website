@@ -125,6 +125,7 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    'del_pass' => env('DEL_PASS','123'),
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

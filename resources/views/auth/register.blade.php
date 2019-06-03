@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title',' | 注册')
 @section('css')
     <link rel="stylesheet" href="{{ asset('dist/layuiadmin/style/login.css') }}" media="all">
 @endsection
