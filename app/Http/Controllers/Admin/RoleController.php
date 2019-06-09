@@ -11,9 +11,10 @@ use Spatie\Permission\Models\Role;
 use Session;
 class RoleController extends Controller
 {
+    //角色管理 使用laravel-permissions 包
     public function __construct()
     {
-        $this->middleware(['auth','isAdmin']);//isAdmin 中间件让具备指定权限的用户才能访问该资源
+        $this->middleware(['auth:admin','isAdmin']);//isAdmin 中间件让具备指定权限的用户才能访问该资源
     }
 
     /**
@@ -24,7 +25,7 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
-        return view('roles.index')->with('roles',$roles);
+        return view('admin.roles.index')->with('roles',$roles);
     }
 
     /**
@@ -36,7 +37,7 @@ class RoleController extends Controller
     {
         $permissions = Permission::all();
 
-        return view('roles.create',['permissions'=>$permissions]);
+        return view('admin.roles.create',['permissions'=>$permissions]);
     }
 
     /**
@@ -67,7 +68,6 @@ class RoleController extends Controller
         }
 
         return $this->success('角色已添加');
-        //return redirect()->route('roles.index')->with('flash_message','角色已添加');
     }
 
     /**
@@ -96,7 +96,7 @@ class RoleController extends Controller
         if(!empty($role_permissions)){
             $role_permissions_ids = array_column($role_permissions,'id');
         }
-        return view('roles.edit',compact('role','permissions','role_permissions_ids'));
+        return view('admin.roles.edit',compact('role','permissions','role_permissions_ids'));
     }
 
     /**
@@ -129,7 +129,6 @@ class RoleController extends Controller
         }
 
         return $this->success('角色更新成功');
-//        return redirect()->route('roles.index')->with('flash_message','角色已更新');
     }
 
     /**
@@ -143,7 +142,6 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $role->delete();
         return $this->success('角色删除成功');
-        //return redirect()->route('roles.index')->with('flash_message','角色已删除');
     }
 
 

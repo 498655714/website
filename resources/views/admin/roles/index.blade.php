@@ -65,7 +65,7 @@
                 elem: '#role' //指定原始表格元素选择器（推荐id选择器）
                 ,height: 500 //容器高度
                 ,method:'post'
-                ,url: "{{ route('roles.getData') }}" //数据接口
+                ,url: "{{ route('admin.roles.getData') }}" //数据接口
                 ,page: true //开启分页
                 ,where:{'_token':"{{csrf_token()}}"}
                 ,response:{
@@ -91,7 +91,7 @@
                 });
             });
             //添加权限js
-            @include('roles._createjs');
+            @include('admin.roles._createjs');
 
             //监听工具条
             table.on('tool(role)', function(obj){ //注：tool是工具条事件名，dataTable是table原始容器的属性 lay-filter="对应的值"
@@ -102,7 +102,7 @@
                     layer.open({
                         type: 2
                         ,title: '编辑角色'
-                        ,content: "/roles/"+roles_id+'/edit'
+                        ,content: "roles/"+roles_id+'/edit'
                         ,maxmin: true
                         ,area: ['760px', '650px']
                         ,btn: ['确定', '取消']
@@ -116,7 +116,7 @@
                                 var field = data.field; //获取提交的字段
 
                                 $.ajax({
-                                    url:"/roles/"+roles_id
+                                    url:"roles/"+roles_id
                                     ,type:'post'
                                     ,data: field
                                     ,beforeSend:function (XMLHttpRequest) {
@@ -133,9 +133,10 @@
                                         }
 
                                     }
-                                    ,error:function(){
+                                    ,error:function(XMLHttpRequest, textStatus, errorThrown){
+                                        var res = JSON.parse(XMLHttpRequest.responseText);
                                         layer.closeAll('loading');
-                                        layer.msg('服务器错误',{icon:5,time:2000});
+                                        layer.msg(res.message,{icon:5,time:2000});
                                     }
                                 });
                             });
@@ -153,7 +154,7 @@
                             layer.confirm('确定删除吗？', function(index) {
                                 //执行 Ajax 后重载
                                 $.ajax({
-                                    url:"/roles/"+roles_id
+                                    url:"roles/"+roles_id
                                     ,type:'post'
                                     ,data: {'_token':"{{csrf_token()}}",'_method':'delete'}
                                     ,success:function (res) {
@@ -165,9 +166,10 @@
                                         }
 
                                     }
-                                    ,error:function(){
+                                    ,error:function(XMLHttpRequest, textStatus, errorThrown){
+                                        var res = JSON.parse(XMLHttpRequest.responseText);
                                         layer.closeAll('loading');
-                                        layer.msg('服务器错误',{icon:5,time:2000});
+                                        layer.msg(res.message,{icon:5,time:2000});
                                     }
                                 });
                             });

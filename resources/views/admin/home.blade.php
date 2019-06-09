@@ -61,7 +61,7 @@
                             <dd><a lay-href="set/user/info.html">基本资料</a></dd>
                             <dd><a lay-href="set/user/password.html">修改密码</a></dd>
                             <hr>
-                            <form action="{{ route('logout') }}" method="post" id="logout">
+                            <form action="{{ route('admin.logout') }}" method="post" id="logout">
                                 {{ csrf_field() }}
                                 <dd  style="text-align: center;"><a href="javascript:;" onclick="click_logout()">退出</a></dd>{{-- layadmin-event="logout"--}}
                             </form>
@@ -80,7 +80,7 @@
             <!-- 侧边菜单 -->
             <div class="layui-side layui-side-menu">
                 <div class="layui-side-scroll">
-                    <div class="layui-logo" lay-href="{{ route('console') }}">
+                    <div class="layui-logo" lay-href="{{ route('admin.console') }}">
                         <span>{{ config('app.name') }}</span>
                     </div>
 
@@ -92,7 +92,7 @@
                             </a>
                             <dl class="layui-nav-child">
                                 <dd data-name="console" class="layui-this">
-                                    <a lay-href="{{ route('console') }}">控制台</a>
+                                    <a lay-href="{{ route('admin.console') }}">控制台</a>
                                 </dd>
                             </dl>
                         </li>
@@ -140,10 +140,10 @@
                                     <a lay-href="user/administrators/list.html">后台管理员</a>
                                 </dd>
                                 <dd>
-                                    <a lay-href="{{ route('permissions.index') }}">权限管理</a>
+                                    <a lay-href="{{ route('admin.permissions.index') }}">权限管理</a>
                                 </dd>
                                 <dd>
-                                    <a lay-href="{{ route('roles.index') }}">角色管理</a>
+                                    <a lay-href="{{ route('admin.roles.index') }}">角色管理</a>
                                 </dd>
                             </dl>
                         </li>
@@ -156,8 +156,7 @@
                                 <dd class="layui-nav-itemed">
                                     <a href="javascript:;">系统设置</a>
                                     <dl class="layui-nav-child">
-                                        <dd><a lay-href="set/system/website.html">网站设置</a></dd>
-                                        <dd><a lay-href="set/system/email.html">邮件服务</a></dd>
+                                        <dd><a lay-href="{{ route('admin.websiteSetup.index') }}">网站设置</a></dd>
                                     </dl>
                                 </dd>
                                 <dd class="layui-nav-itemed">
@@ -191,7 +190,7 @@
                 </div>
                 <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
                     <ul class="layui-tab-title" id="LAY_app_tabsheader">
-                        <li lay-id="{{ route('console') }}" lay-attr="{{ route('console') }}" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+                        <li lay-id="{{ route('admin.console') }}" lay-attr="{{ route('admin.console') }}" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
                     </ul>
                 </div>
             </div>
@@ -200,7 +199,7 @@
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body">
                 <div class="layadmin-tabsbody-item layui-show">
-                    <iframe src="{{ route('console') }}" frameborder="0" class="layadmin-iframe"></iframe>
+                    <iframe src="{{ route('admin.console') }}" frameborder="0" class="layadmin-iframe"></iframe>
                 </div>
             </div>
 

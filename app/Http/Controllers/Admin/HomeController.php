@@ -9,13 +9,14 @@ use App\Http\Controllers\Common\Controller;
 class HomeController extends Controller
 {
     /**
+     * 后台主页
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:admin');
     }
 
     /**

@@ -10,9 +10,10 @@ use Spatie\Permission\Models\Permission;
 use Session;
 class PermissionController extends Controller
 {
+    //权限管理 使用laravel-permissions 权限管理包
     public function __construct()
     {
-        $this->middleware(['auth','isAdmin']);
+        $this->middleware(['auth:admin','isAdmin']);
     }
 
     /**
@@ -22,7 +23,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return view('permissions.index');
+        return view('admin.permissions.index');
     }
 
     /**
@@ -33,7 +34,7 @@ class PermissionController extends Controller
     public function create()
     {
         $roles = Role::get();
-        return view('permissions.create')->with('roles',$roles);
+        return view('admin.permissions.create')->with('roles',$roles);
     }
 
     /**
@@ -68,8 +69,6 @@ class PermissionController extends Controller
         }
         return $this->success('权限添加成功');
 
-        //return redirect()->route('permissions.index')->with('success','权限已添加');
-
     }
 
     /**
@@ -80,7 +79,7 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        return redirect('permissions');
+        return redirect('admin.permissions');
     }
 
     /**
@@ -92,7 +91,7 @@ class PermissionController extends Controller
     public function edit($id)
     {
         $permission = Permission::findOrFail($id);
-        return view('permissions.edit', compact('permission'));
+        return view('admin.permissions.edit', compact('permission'));
     }
 
     /**
@@ -114,7 +113,6 @@ class PermissionController extends Controller
         $input = $request->all();
         $permission->fill($input)->save();
         return $this->success('权限更新成功');
-        //return redirect()->route('permissions.index')->with('success','权限已更新');
     }
 
     /**
@@ -128,11 +126,9 @@ class PermissionController extends Controller
         $permission = Permission::findOrFail($id);
         if($permission->name == "Administer roles & permissions"){
             return $this->failed('该权限不允许删除',200);
-            //return redirect()->route('permissions.index')->with('errors',['无法删除该权限']);
         }
         $permission->delete();
         return $this->success('权限删除成功');
-        //return redirect()->route('permissions.index')->with('success','权限已删除');
     }
 
     /**

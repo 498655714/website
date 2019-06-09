@@ -7,7 +7,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+
+class Admin extends Authenticatable
 {
     use Notifiable;
     use HasRoles;
@@ -15,8 +16,9 @@ class User extends Authenticatable
     /**
      * @var string
      */
-    protected $guard = 'web';
-    protected $table = 'users';
+    protected $guard = 'admin';
+
+    protected $table='admins';
     /**
      * The attributes that are mass assignable.
      *

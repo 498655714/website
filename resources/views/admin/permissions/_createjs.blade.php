@@ -3,21 +3,22 @@ var active = {
 add: function(){
 layer.open({
 type: 2
-,title: '创建角色'
-,content: '{{ route('roles.create') }}'
-,area: ['760px', '650px']
+,title: '添加权限'
+,content: '{{ route('admin.permissions.create') }}'
+,area: ['560px', '550px']
 ,btn: ['确定', '取消']
 ,yes: function(index, layero){
 var iframeWindow = window['layui-layer-iframe'+ index]
-,submitID = 'roles_add'
+,submitID = 'permissions_add'
 ,submit = layero.find('iframe').contents().find('#'+ submitID);
 
 //监听提交
 iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
 var field = data.field; //获取提交的字段
 
+//提交 Ajax 成功后，静态更新表格中的数据
 $.ajax({
-url:"{{ route('roles.store') }}"
+url:"{{ route('admin.permissions.store') }}"
 ,type:'post'
 ,data: field
 ,beforeSend:function (XMLHttpRequest) {
@@ -27,15 +28,16 @@ layer.load();
 layer.closeAll('loading');
 if(res.status == 'success'){
 layer.msg(res.data,{icon:1,time:1000});
-$('#roles_list_search').click();  //数据刷新
+$('#permissions_list_search').click();  //数据刷新
 layer.close(index); //关闭弹层
 }else {
-layer.msg(res.message,{icon:5,time:2000});
+layer.msg(res.message,{icon:5,time:1000});
 }
 }
-,error:function(){
+,error:function(XMLHttpRequest, textStatus, errorThrown){
+var res = JSON.parse(XMLHttpRequest.responseText);
 layer.closeAll('loading');
-layer.msg('服务器错误',{icon:5,time:2000});
+layer.msg(res.message,{icon:5,time:2000});
 }
 });
 

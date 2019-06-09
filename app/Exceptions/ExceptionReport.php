@@ -57,7 +57,7 @@ class ExceptionReport
         UnauthorizedHttpException::class=>['未登录或登录状态失效',422],
         NotFoundHttpException::class=>['没有找到该页面',404],
         MethodNotAllowedHttpException::class=>['访问方法不正确',405],
-        QueryException::class=>['参数错误',401],
+        //QueryException::class=>['参数错误',401],
     ];
 
     /**

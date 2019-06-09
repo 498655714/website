@@ -10,3 +10,9 @@
 @if(session('success'))
     layer.msg("{{session('success')}}",{icon:6});
 @endif
+
+//错误提示
+@if(session('error'))
+    layer.msg("{{session('error')}}",{icon:5});
+@endif
+
