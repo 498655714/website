@@ -78,7 +78,7 @@ class Handler extends ExceptionHandler
         if($request->expectsJson()){
             return response()->json(['message' => $exception->getMessage()], 401);
         }else{
-            return  in_array('admin', $exception->guards())?  redirect()->guest('/admin/login') : redirect()->guest('login');
+            echo  in_array('admin', $exception->guards())?  "<script>top.location.href='/admin/login'</script>" : "<script>top.location.href='/login'</script>";
         }
     }
 }
