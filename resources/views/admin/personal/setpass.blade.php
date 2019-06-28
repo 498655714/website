@@ -29,11 +29,12 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">确认新密码</label>
                                 <div class="layui-input-inline">
-                                    <input type="password" name="password_conformation" lay-verify="repass" lay-verType="tips" autocomplete="off" class="layui-input">
+                                    <input type="password" name="password_confirmation" lay-verify="repass" lay-verType="tips" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <button class="layui-btn" lay-submit lay-filter="setmypass">确认修改</button>
                                 </div>
                             </div>
@@ -50,12 +51,12 @@
             base: '{{ asset("dist/layuiadmin")  }}' + '/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
-        }).use(['form', 'layer','set'], function () {
+        }).use(['form', 'layer'], function () {
             var form = layui.form, layer = layui.layer, $ = layui.$;
             form.on('submit(setmypass)', function(data){
                 var field = data.field;
                 $.ajax({
-                    url:"{{ route('admin.websiteSetup.store') }}"
+                    url:"{{ route('admin.personal.setpass') }}"
                     ,type:'post'
                     ,data: field
                     ,beforeSend:function (XMLHttpRequest) {

@@ -35,5 +35,6 @@ Route::group(['prefix'=>'admin','namespace' => 'Admin'], function () {
     //后台管理用户
     Route::get('personal','AdminController@personalIndex')->name('admin.personal.index');
     Route::get('setpass','AdminController@setPassword')->name('admin.personal.setpass');
+    Route::post('setpass','AdminController@setPasswordUpdate')->name('admin.personal.setpass');
 
 });

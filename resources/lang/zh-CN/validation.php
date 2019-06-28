@@ -184,5 +184,6 @@ return [
         'ext_upload'            => '上传文件类型',
         'keywords'              => '关键字',
         'copyright'             => '版权信息',
+        'oldPassword'           => '原始密码',
     ],
 ];

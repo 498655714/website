@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -22,6 +23,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontFlash = [
+        'oldPassword',
         'password',
         'password_confirmation',
     ];
@@ -61,5 +63,22 @@ class Handler extends ExceptionHandler
             }
         }
         return parent::render($request, $exception);
+    }
+
+    /**
+     * 重写未登录认证方法，跳转对应守卫的登录页面
+     * Convert an authentication exception into a response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @return \Illuminate\Http\Response
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if($request->expectsJson()){
+            return response()->json(['message' => $exception->getMessage()], 401);
+        }else{
+            return  in_array('admin', $exception->guards())?  redirect()->guest('/admin/login') : redirect()->guest('login');
+        }
     }
 }
