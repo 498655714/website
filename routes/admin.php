@@ -4,7 +4,7 @@
 //后台管理用户
 Route::group(['prefix'=>'admin','namespace' => 'Admin'], function () {
 
-    //后台管理用户认证
+    //后台管理用户登录认证
     Route::get('login','Auth\LoginController@showAdminLoginForm')->name('admin.login');
     Route::post('login','Auth\LoginController@adminLogin')->name('admin.login');
     Route::post('logout','Auth\LoginController@logout')->name('admin.logout');
@@ -31,4 +31,9 @@ Route::group(['prefix'=>'admin','namespace' => 'Admin'], function () {
     //站点设置
     Route::get('websiteSetup/index','WebsiteSetupController@index')->name('admin.websiteSetup.index');
     Route::post('websiteSetup/store','WebsiteSetupController@store')->name('admin.websiteSetup.store');
+
+    //后台管理用户
+    Route::get('personal','AdminController@personalIndex')->name('admin.personal.index');
+    Route::get('setpass','AdminController@setPassword')->name('admin.personal.setpass');
+
 });
