@@ -65,7 +65,9 @@
                     ,success:function (res) {
                         layer.closeAll('loading');
                         if(res.status == 'success'){
-                            layer.msg(res.data,{icon:1,time:2000});
+                            layer.msg(res.data,{icon:1,time:2000},function () {
+                                location.reload();
+                            });
                         }else {
                             layer.msg(res.message,{icon:5,time:2000});
                         }

@@ -25,31 +25,31 @@
                                                value="{{ $setups['domain'] }}" class="layui-input">
                                     </div>
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label" style="width: 140px;">缓存时间</label>
-                                    <div class="layui-input-inline" style="width: 80px;">
-                                        <input type="text" name="cache" lay-verify="number"
-                                               value="{{ $setups['cache'] }}" class="layui-input">
-                                    </div>
-                                    <div class="layui-input-inline layui-input-company">分钟</div>
-                                    <div class="layui-form-mid layui-word-aux">本地开发一般推荐设置为 0，线上环境建议设置为 10。</div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label" style="width: 140px;">最大文件上传</label>
-                                    <div class="layui-input-inline" style="width: 80px;">
-                                        <input type="text" name="max_upload" lay-verify="number"
-                                               value="{{ $setups['max_upload'] }}" class="layui-input">
-                                    </div>
-                                    <div class="layui-input-inline layui-input-company">KB</div>
-                                    <div class="layui-form-mid layui-word-aux">提示：1 M = 1024 KB</div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label" style="width: 140px;">上传文件类型</label>
-                                    <div class="layui-input-inline" style="width: 1000px;">
-                                        <input type="text" name="ext_upload"   lay-verify="required" value="{{ $setups['ext_upload'] }}"
-                                               class="layui-input">
-                                    </div>
-                                </div>
+{{--                                <div class="layui-form-item">--}}
+{{--                                    <label class="layui-form-label" style="width: 140px;">缓存时间</label>--}}
+{{--                                    <div class="layui-input-inline" style="width: 80px;">--}}
+{{--                                        <input type="text" name="cache" lay-verify="number"--}}
+{{--                                               value="{{ $setups['cache'] }}" class="layui-input">--}}
+{{--                                    </div>--}}
+{{--                                    <div class="layui-input-inline layui-input-company">分钟</div>--}}
+{{--                                    <div class="layui-form-mid layui-word-aux">本地开发一般推荐设置为 0，线上环境建议设置为 10。</div>--}}
+{{--                                </div>--}}
+{{--                                <div class="layui-form-item">--}}
+{{--                                    <label class="layui-form-label" style="width: 140px;">最大文件上传</label>--}}
+{{--                                    <div class="layui-input-inline" style="width: 80px;">--}}
+{{--                                        <input type="text" name="max_upload" lay-verify="number"--}}
+{{--                                               value="{{ $setups['max_upload'] }}" class="layui-input">--}}
+{{--                                    </div>--}}
+{{--                                    <div class="layui-input-inline layui-input-company">KB</div>--}}
+{{--                                    <div class="layui-form-mid layui-word-aux">提示：1 M = 1024 KB</div>--}}
+{{--                                </div>--}}
+{{--                                <div class="layui-form-item">--}}
+{{--                                    <label class="layui-form-label" style="width: 140px;">上传文件类型</label>--}}
+{{--                                    <div class="layui-input-inline" style="width: 1000px;">--}}
+{{--                                        <input type="text" name="ext_upload"   lay-verify="required" value="{{ $setups['ext_upload'] }}"--}}
+{{--                                               class="layui-input">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 <div class="layui-form-item layui-form-text">
                                     <label class="layui-form-label">首页标题</label>
