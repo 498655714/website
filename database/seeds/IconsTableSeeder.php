@@ -12,7 +12,7 @@ class IconsTableSeeder extends Seeder
     public function run()
     {
         \App\Models\Icon::truncate();
-        $file = file_get_contents(public_path('app').'/icons.json');
+        $file = file_get_contents(public_path().'/icons.json');
         $icons = json_decode($file,true);
         foreach ($icons as $icon){
             \App\Models\Icon::create($icon);
