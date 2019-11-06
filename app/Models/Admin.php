@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Notifications\ResetPassword;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -23,6 +24,7 @@ class Admin extends Authenticatable
      * The attributes that are mass assignable.
      *
      * @var array
+     *
      */
     protected $fillable = [
         'name', 'email', 'password',
@@ -51,4 +53,6 @@ class Admin extends Authenticatable
     {
         $this->notify(new ResetPassword($token));
     }
+
+
 }

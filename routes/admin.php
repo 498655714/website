@@ -20,21 +20,28 @@ Route::group(['prefix'=>'admin','namespace' => 'Admin'], function () {
     Route::get('home', 'HomeController@index')->name('admin.home');//后台主页
     Route::get('home/console', 'HomeController@console')->name('admin.console');//后台控制台
 
-    //权限
-    Route::resource('permissions','PermissionController',['names'=>'admin.permissions']);
-    Route::post('permissions/getData','PermissionController@getData')->name('admin.permissions.getData');
 
-    //角色
-    Route::resource('roles','RoleController',['names'=>'admin.roles']);
-    Route::post('roles/getData','RoleController@getData')->name('admin.roles.getData');
-
-    //站点设置
-    Route::get('websiteSetup/index','WebsiteSetupController@index')->name('admin.websiteSetup.index');
-    Route::post('websiteSetup/store','WebsiteSetupController@store')->name('admin.websiteSetup.store');
-
-    //后台管理用户
     Route::get('personal','AdminController@personalIndex')->name('admin.personal.index');
     Route::get('setpass','AdminController@setPassword')->name('admin.personal.setpass');
     Route::post('setpass','AdminController@setPasswordUpdate')->name('admin.personal.setpass');
+    //超级管理员才拥有访问权限
+    Route::group(['middleware' => ['role:super-admin']], function () {
+        //权限
+        Route::resource('permissions','PermissionController',['names'=>'admin.permissions']);
+        Route::post('permissions/getData','PermissionController@getData')->name('admin.permissions.getData');
+
+        //角色
+        Route::resource('roles','RoleController',['names'=>'admin.roles']);
+        Route::post('roles/getData','RoleController@getData')->name('admin.roles.getData');
+
+        //站点设置
+        Route::get('websiteSetup/index','WebsiteSetupController@index')->name('admin.websiteSetup.index');
+        Route::post('websiteSetup/store','WebsiteSetupController@store')->name('admin.websiteSetup.store');
+
+        //后台管理用户
+        Route::resource('managements','AdminController',['names'=>'admin.managements']);//后台管理用户路由
+        Route::post('managements/getData','AdminController@getData')->name('admin.managements.getData');
+
+    });
 
 });

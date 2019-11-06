@@ -62,6 +62,21 @@ class Handler extends ExceptionHandler
                 return $reporter->prodReport();
             }
         }
+
+        //角色对应权限验证
+        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+            return response()->view('error.' . 403, [], 403);
+        }
+        //非ajax请求异常处理
+//        if (!($exception instanceof AuthenticationException)) {
+//            $code = $exception->getStatusCode();
+//            if (view()->exists('errors.' .$code )) {
+//                return response()->view('error.' . $code, [], $code);
+//            }else{
+//                return response()->view('error.error', [], $code);
+//            }
+//        }
+
         return parent::render($request, $exception);
     }
 

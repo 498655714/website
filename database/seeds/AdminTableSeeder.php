@@ -22,5 +22,7 @@ class AdminTableSeeder extends Seeder
             'password' => \Illuminate\Support\Facades\Hash::make("superman"),
             'uuid' => \Faker\Provider\Uuid::uuid()
         ]);
+
+        $user->assignRole('super-admin');
     }
 }

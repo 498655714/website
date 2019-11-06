@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
@@ -53,6 +54,7 @@ class ExceptionReport
         AuthenticationException::class=>['未授权',401],
         ModelNotFoundException::class=>['该模型未找到',404],
         AuthorizationException::class=>['没有此权限',403],
+        UnauthorizedException::class=>['没有此权限',403],
         ValidationException::class=>[],
         UnauthorizedHttpException::class=>['未登录或登录状态失效',422],
         NotFoundHttpException::class=>['没有找到该页面',404],

@@ -58,7 +58,7 @@
                             <cite>{{ Auth::user()->name }}</cite>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a lay-href="set/user/info.html">基本资料</a></dd>
+                            <dd><a lay-href="{{ route('admin.personal.index') }}">基本资料</a></dd>
                             <dd><a lay-href="{{ route('admin.personal.setpass') }}">修改密码</a></dd>
                             <hr>
                             <form action="{{ route('admin.logout') }}" method="post" id="logout">
@@ -137,7 +137,7 @@
                                     <a lay-href="user/user/list.html">网站用户</a>
                                 </dd>
                                 <dd>
-                                    <a lay-href="user/administrators/list.html">后台管理员</a>
+                                    <a lay-href="{{ route('admin.managements.index') }}">后台管理员</a>
                                 </dd>
                                 <dd>
                                     <a lay-href="{{ route('admin.permissions.index') }}">权限管理</a>
@@ -162,7 +162,7 @@
                                 <dd class="layui-nav-itemed">
                                     <a href="javascript:;">我的设置</a>
                                     <dl class="layui-nav-child">
-                                        <dd><a lay-href="set/user/info.html">基本资料</a></dd>
+                                        <dd><a lay-href="{{ route('admin.personal.index') }}">基本资料</a></dd>
                                         <dd><a lay-href="{{ route('admin.personal.setpass') }}">修改密码</a></dd>
                                     </dl>
                                 </dd>
