@@ -39,8 +39,13 @@
 
                 <table id="role" lay-filter="role"></table>
                 <script type="text/html" id="action-list">
+                    @{{#  if(d.id == 1){ }}
+                    <a class="layui-btn layui-btn-disabled layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                    <a class="layui-btn layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                    @{{#  } else { }}
                     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                    @{{#  } }}
                 </script>
             </div>
         </div>
@@ -104,7 +109,7 @@
                         ,title: '编辑角色'
                         ,content: "roles/"+roles_id+'/edit'
                         ,maxmin: true
-                        ,area: ['760px', '650px']
+                        ,area: ['760px', '550px']
                         ,btn: ['确定', '取消']
                         ,yes: function(index, layero){
                             var iframeWindow = window['layui-layer-iframe'+ index]

@@ -45,17 +45,18 @@
 
         <div class="layui-card-body">
             <div style="padding-bottom: 10px;">
-                <button class="layui-btn layuiadmin-btn-admin" data-type="batchdel">删除</button>
+{{--                <button class="layui-btn layuiadmin-btn-admin" data-type="batchdel">删除</button>--}}
                 <button class="layui-btn layuiadmin-btn-admin" data-type="add">添加</button>
             </div>
 
             <table id="managements" lay-filter="managements"></table>
 
             <script type="text/html" id="action-list">
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
-                @{{#  if(d.roles == '超级管理员'){ }}
+                @{{#  if(d.id == 1){ }}
+                <a class="layui-btn layui-btn-disabled layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
                 <a class="layui-btn layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>
                 @{{#  } else { }}
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
                 @{{#  } }}
             </script>
@@ -90,7 +91,7 @@
                     {checkbox: true,fixed: true}
                     ,{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
                     ,{field: 'username', title: '登录账号', align:'center'}
-                    ,{field: 'name', title: '用户名称', align:'center'}
+                    ,{field: 'name', title: '昵称', align:'center'}
                     ,{field: 'phone', title: '手机号', align:'center'}
                     ,{field: 'email', title: '邮箱', align:'center'}
                     ,{field: 'roles', title: '角色', align:'center'}
@@ -118,7 +119,7 @@
                 if(layEvent === 'edit'){//编辑操作
                     layer.open({
                         type: 2
-                        ,title: '编辑权限'
+                        ,title: '编辑后台用户'
                         ,content: "managements/"+managements_id+'/edit'
                         ,maxmin: true
                         ,area: ['560px', '550px']

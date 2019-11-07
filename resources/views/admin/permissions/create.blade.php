@@ -31,7 +31,7 @@
             <div class="layui-input-block">
                 @foreach($roles as $key => $role)
 {{--                    默认第一个为超级管理员角色,超管拥有所有权限      --}}
-                    @if($key === 0) @continue @endif
+                    @if($key === 0)  @continue @endif
                     <input type="checkbox" name="roles[]" value="{{ $role->id }}" title="{{ $role->chinese_name }}"   class="layui-input">
                 @endforeach
             </div>

@@ -39,9 +39,6 @@ class WebsiteSetupController extends Controller
         $this->validate($request,[
             'site_name'=>'required|max:255',
             'domain'=>'required|max:255',
-            'cache'=>'required|max:255',
-            'max_upload'=>'required|max:255',
-            'ext_upload'=>'required|max:255',
             'keywords'=>'required|max:255',
             'description'=>'required|max:255',
             'copyright'=>'required|max:255',

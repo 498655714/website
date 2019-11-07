@@ -94,8 +94,10 @@ class AdminController extends BaseController
      */
     public function edit($id)
     {
-        $permission = Permission::findOrFail($id);
-        return view('admin.managements.edit', compact('permission'));
+        $admin = Admin::findOrFail($id);
+        $roles = Role::get();
+        $admin_roles = $admin->roles()->pluck('id')->toArray();
+        return view('admin.managements.edit', compact('admin','roles','admin_roles'));
     }
 
     /**
@@ -107,31 +109,41 @@ class AdminController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        $permission = Permission::findOrFail($id);
         $this->validate($request,[
-            'name'=>'required|max:40',
-            'chinese_name'=>'required|max:40',
-            'guard_name'=>'max:40',
+            'username'=>'required|string|max:40',
+            'name'=>'required|string|max:40',
+            'phone'=>'required|int|max:11',
+            'email'=>'required|string|email|max:255|unique:users',
         ]);
+        $admin = new Admin();
+        $input = $request->only(['name', 'email', 'username','phone']);
+        $roles = $request['roles']; // 获取所有角色
+        $admin = $admin->fill($input)->save();
 
-        $input = $request->all();
-        $permission->fill($input)->save();
-        return $this->success('用户更新成功');
+        $roles = $request['roles']; // 获取输入的角色字段
+        // 检查是否某个角色被选中
+        if (isset($roles)) {
+            $admin->roles()->sync($roles);  // 如果有角色选中与用户关联则更新用户角色
+        } else {
+            $admin->roles()->detach(); // 如果没有选择任何与用户关联的角色则将之前关联角色解除
+        }
+        return $this->success('用户添加成功');
     }
 
     /**
-     * 删除给定的权限
+     * 删除给定的用户
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $permission = Permission::findOrFail($id);
-        if($permission->name == "Administer roles & permissions"){
+        // 通过给定id获取并删除用户
+        if($id == 1){
             return $this->failed('该用户不允许删除',200);
         }
-        $permission->delete();
+        $admin = Admin::findOrFail($id);
+        $admin->delete();
         return $this->success('用户删除成功');
     }
 
@@ -143,7 +155,7 @@ class AdminController extends BaseController
     public function getData(Request $request){
         $input = $request->all();
         //需要获取的列
-        $field = ['id','username','name','phone','email','created_at'];
+        //$field = ['id','username','name','phone','email','created_at'];
         $lists = [];
         $managements = new Admin();
         //登录账号
@@ -158,9 +170,9 @@ class AdminController extends BaseController
         if(isset($input['email']) && !empty($input['email'])){
             $managements = $managements->where('email','like','%'.$input['email'].'%');
         }
-        $managements = $managements->paginate($input['limit'],$field,null,$input['page']);//获取所有权限
+        $managements = $managements->get();//获取指定条件的用户
 
-        //取出用户对应角色
+        //封装用户对应角色
         if(!empty($managements)){
             foreach($managements as $key => $management){
                 $management_roles = $management->roles();
@@ -180,11 +192,23 @@ class AdminController extends BaseController
                 }
             }
         }
+        //分页处理
+        $total = count($lists); //符合条件的总条数
+        //$pages_total = ceil($total/$input['limit']);//总页数
+        $start = $input['limit']*($input['page']-1)+1;//开始标记
+        $end = $input['page']*$input['limit'];        //结束标记
+        $arr = [];
+        for($start;$start<=$end ;$start++){
+            if(!isset($lists[$start-1])){
+                break;
+            }
+            $arr[] = $lists[$start-1];
+        }
         $data = [
             'code'  =>  200,
             'message'   => '获取数据成功',
-            'count' =>  count($lists),
-            'data'  =>  $lists
+            'count' =>  $total,
+            'data'  =>  $arr
         ];
         return \response()->json($data);
     }

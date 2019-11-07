@@ -5,7 +5,7 @@ layer.open({
 type: 2
 ,title: '创建角色'
 ,content: '{{ route('admin.roles.create') }}'
-,area: ['760px', '650px']
+,area: ['760px', '550px']
 ,btn: ['确定', '取消']
 ,yes: function(index, layero){
 var iframeWindow = window['layui-layer-iframe'+ index]
