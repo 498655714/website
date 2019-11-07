@@ -1,58 +1,54 @@
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
 
-## About Laravel
+## 关于 CMS后台管理系统(基础版)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+本系统是基于laravel5.5,layui-v2.4.5 制作的CMS后台管理系统基础版,用于快速开发网站、博客、新闻等基础框架。(尚未开发完成)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 安装步骤
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+ ##### 1. 执行以下命令,将项目克隆到本地 
+       git clone https://github.com/498655714/website.git
+ ##### 2. 进入项目根目录后,安装依赖关系
+       composer install
+ ##### 3. 复制配置文件
+       cp .env.example .env
+ ##### 4. 创建新的应用程序密钥
+       php artisan key:generate
+ ##### 5. 设置数据库及邮件服务等 编辑.env文件 以下是实例
+       
+       DB_CONNECTION=mysql
+       DB_HOST=127.0.0.1
+       DB_PORT=3306
+       DB_DATABASE=website
+       DB_USERNAME=website
+       DB_PASSWORD=你的密码
+     
+       MAIL_DRIVER=smtp      
+       MAIL_HOST=服务器
+       MAIL_PORT=端口
+       MAIL_USERNAME=账号
+       MAIL_PASSWORD=这里输入邮件服务器给的授权码
+       MAIL_ENCRYPTION=ssl
+       MAIL_FROM_ADDRESS=账号
+       MAIL_FROM_NAME=署名
+       
+       DEL_PASS=123456     //用户点击删除时，会提示输入的密码，再次设置               
 
-## Learning Laravel
+ ##### 6. 添加自动加载
+     composer dump-autoload
+     
+ ##### 7. 运行数据库迁移
+      php artisan migrate
+      
+ ##### 8. 运行数据填充
+      php artisan db:seed      
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+ ## Laravel 框架  nginx rewrite配置
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    location / { 
+             index index.html index.htm index.php;
+             if (!-e $request_filename){ 
+                  rewrite ^/(.*)$ /index.php/$1 last; 
+             } 
+     }
