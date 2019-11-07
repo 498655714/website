@@ -18,10 +18,13 @@ class CreateAdminsTable extends Migration
             $table->string('username')->unique();
             $table->string('phone')->unique();
             $table->string('name');
+            $table->string('avatar')->comment('头像');
+            $table->enum('sex',['男','女']);
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
             $table->uuid('uuid');
+            $table->string('remarks')->comment('备注');
             $table->timestamps();
         });
     }

@@ -22,6 +22,7 @@ Route::group(['prefix'=>'admin','namespace' => 'Admin'], function () {
 
 
     Route::get('personal','AdminController@personalIndex')->name('admin.personal.index');
+    Route::post('personal','AdminController@personalSave')->name('admin.personal.index');
     Route::get('setpass','AdminController@setPassword')->name('admin.personal.setpass');
     Route::post('setpass','AdminController@setPasswordUpdate')->name('admin.personal.setpass');
     //超级管理员才拥有访问权限

@@ -47,7 +47,7 @@ class AdminController extends BaseController
         $this->validate($request,[
             'username'=>'required|string|max:40',
             'name'=>'required|string|max:40',
-            'phone'=>'required|int|max:11',
+            'phone'=>'required|int|unique:users',
             'email'=>'required|string|email|max:255|unique:users',
         ]);
         $name = $request['name'];
@@ -112,10 +112,10 @@ class AdminController extends BaseController
         $this->validate($request,[
             'username'=>'required|string|max:40',
             'name'=>'required|string|max:40',
-            'phone'=>'required|int|max:11',
+            'phone'=>'required|int|unique:users',
             'email'=>'required|string|email|max:255|unique:users',
         ]);
-        $admin = new Admin();
+        $admin = Admin::findOrFail($id);
         $input = $request->only(['name', 'email', 'username','phone']);
         $roles = $request['roles']; // 获取所有角色
         $admin = $admin->fill($input)->save();
@@ -127,7 +127,7 @@ class AdminController extends BaseController
         } else {
             $admin->roles()->detach(); // 如果没有选择任何与用户关联的角色则将之前关联角色解除
         }
-        return $this->success('用户添加成功');
+        return $this->success('用户编辑成功');
     }
 
     /**
@@ -215,7 +215,24 @@ class AdminController extends BaseController
 
     //个人设置页面展示
     public function personalIndex(){
-        return view('admin.personal.index');
+        $admin = Auth::user();//当前用户信息
+        $admin_roles = $admin->roles()->pluck('chinese_name')->implode(',');
+        return view('admin.personal.index',compact('admin','admin_roles'));
+    }
+    //个人设置保存操作
+    public function personalSave(Request $request){
+        $this->validate($request,[
+            'name'=>'required|string|max:40',
+            'sex'=>'required|string|max:40',
+            'avatar'=>'required|string|max:255',
+            'phone'=>'required|int|unique:users',
+            'email'=>'required|string|email|max:255|unique:users',
+            'remarks'=>'string|max:255',
+        ]);
+        $admin = Admin::findOrFail($request['id']);
+        $input = $request->only(['name', 'email', 'sex','avatar','phone','remarks']);
+        $admin = $admin->fill($input)->save();
+        return $this->success('编辑成功');
     }
 
     //密码修改页面

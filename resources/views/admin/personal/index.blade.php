@@ -15,39 +15,35 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">我的角色</label>
                                 <div class="layui-input-inline">
-                                    <select name="role" lay-verify="">
-                                        <option value="1" selected>超级管理员</option>
-                                        <option value="2" disabled>普通管理员</option>
-                                        <option value="3" disabled>审核员</option>
-                                        <option value="4" disabled>编辑人员</option>
-                                    </select>
+                                    <input type="text" name="my_roles" value="{{  $admin_roles  }}" disabled class="layui-input">
+
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">当前角色不可更改为其它角色</div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">用户名</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="username" value="xianxin" readonly class="layui-input">
+                                    <input type="text" name="username" value="{{ $admin->username }}" disabled class="layui-input">
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">不可修改。一般用于后台登入名</div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">昵称</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="nickname" value="贤心" lay-verify="nickname" autocomplete="off" placeholder="请输入昵称" class="layui-input">
+                                    <input type="text" name="name" value="{{ $admin->name }}" lay-verify="nickname" autocomplete="off" placeholder="请输入昵称" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">性别</label>
                                 <div class="layui-input-block">
-                                    <input type="radio" name="sex" value="男" title="男">
-                                    <input type="radio" name="sex" value="女" title="女" checked>
+                                    <input type="radio" name="sex" value="男" title="男" @if($admin->sex == '男') checked @endif>
+                                    <input type="radio" name="sex" value="女" title="女"  @if($admin->sex == '女') checked @endif >
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">头像</label>
                                 <div class="layui-input-inline">
-                                    <input name="avatar" lay-verify="required" id="LAY_avatarSrc" placeholder="图片地址" value="http://cdn.layui.com/avatar/168.jpg" class="layui-input">
+                                    <input name="avatar" lay-verify="required" id="LAY_avatarSrc" placeholder="图片地址" value="{{ $admin->avatar }}" class="layui-input">
                                 </div>
                                 <div class="layui-input-inline layui-btn-container" style="width: auto;">
                                     <button type="button" class="layui-btn layui-btn-primary" id="LAY_avatarUpload">
@@ -59,25 +55,26 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">手机</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="cellphone" value="" lay-verify="phone" autocomplete="off" class="layui-input">
+                                    <input type="text" name="phone" value="{{ $admin->phone }}" lay-verify="phone" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">邮箱</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="email" value="" lay-verify="email" autocomplete="off" class="layui-input">
+                                    <input type="text" name="email" value="{{ $admin->email }}" lay-verify="email" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-form-text">
                                 <label class="layui-form-label">备注</label>
                                 <div class="layui-input-block">
-                                    <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                    <textarea name="remarks" placeholder="您可以备注一下其他信息" class="layui-textarea">{{ $admin->remarks }}</textarea>
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
+                                    <input type="hidden" name="id" value="{{ $admin->id }}">
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <button class="layui-btn" lay-submit lay-filter="setmyinfo">确认修改</button>
-                                    <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
                                 </div>
                             </div>
                         </div>
@@ -93,12 +90,12 @@
             base: '{{ asset("dist/layuiadmin")  }}' + '/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
-        }).use(['form', 'layer','set'], function () {
+        }).use(['form', 'layer'], function () {
             var form = layui.form, layer = layui.layer, $ = layui.$;
-            form.on('submit(setmypass)', function(data){
+            form.on('submit(setmyinfo)', function(data){
                 var field = data.field;
                 $.ajax({
-                    url:"{{ route('admin.websiteSetup.store') }}"
+                    url:"{{ route('admin.personal.index') }}"
                     ,type:'post'
                     ,data: field
                     ,beforeSend:function (XMLHttpRequest) {
