@@ -4,6 +4,7 @@
 //后台管理用户
 Route::group(['prefix'=>'admin','namespace' => 'Admin'], function () {
 
+
     //后台管理用户登录认证
     Route::get('login','Auth\LoginController@showAdminLoginForm')->name('admin.login');
     Route::post('login','Auth\LoginController@adminLogin')->name('admin.login');

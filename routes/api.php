@@ -16,3 +16,5 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+//上传接口
+Route::post('uploads','Common\UploadsController@uploadImg')->name('common.uploads');

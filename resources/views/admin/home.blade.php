@@ -134,7 +134,7 @@
                             </a>
                             <dl class="layui-nav-child">
                                 <dd>
-                                    <a lay-href="user/user/list.html">网站用户</a>
+                                    <a lay-href="{{ route('user.managements.index') }}">网站用户</a>
                                 </dd>
                                 <dd>
                                     <a lay-href="{{ route('admin.managements.index') }}">后台管理员</a>

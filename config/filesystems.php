@@ -54,6 +54,25 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+        'uploads' => [
+            'driver' => 'local',
+            //'root' => storage_path('app/uploads/'.date('Ymd')),
+            //如果需要浏览器直接访问设置下面
+            'root' => public_path('uploads/'.date('Ymd')),
+        ],
+
+        'qiniu' => [
+            'driver'  => 'qiniu',
+            'domains' => [
+                'default'   => 'laravelacademy.com1.z0.glb.clouddn.com', //你的七牛域名
+                'https'     => 'dn-laravelacademy.qbox.me',         //你的HTTPS域名
+                'custom'    => 'static.laravelacademy.org',     //你的自定义域名
+            ],
+            'access_key'=> '',  //AccessKey
+            'secret_key'=> '',  //SecretKey
+            'bucket'    => '',  //Bucket名字
+            'notify_url'=> '',  //持久化处理回调地址
+        ],
 
         's3' => [
             'driver' => 's3',

@@ -43,13 +43,12 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">头像</label>
                                 <div class="layui-input-inline">
-                                    <input name="avatar" lay-verify="required" id="LAY_avatarSrc" placeholder="图片地址" value="{{ $admin->avatar }}" class="layui-input">
+                                    <input name="avatar" lay-verify="required" id="avatarSrc" placeholder="图片地址" value="{{ $admin->avatar }}" class="layui-input">
                                 </div>
                                 <div class="layui-input-inline layui-btn-container" style="width: auto;">
-                                    <button type="button" class="layui-btn layui-btn-primary" id="LAY_avatarUpload">
+                                    <button type="button" class="layui-btn layui-btn-primary" id="avatarUpload">
                                         <i class="layui-icon">&#xe67c;</i>上传图片
                                     </button>
-                                    <button class="layui-btn layui-btn-primary" layadmin-event="avartatPreview">查看图片</button >
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -90,8 +89,39 @@
             base: '{{ asset("dist/layuiadmin")  }}' + '/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
-        }).use(['form', 'layer'], function () {
+        }).use(['form', 'layer','upload'], function () {
             var form = layui.form, layer = layui.layer, $ = layui.$;
+            var upload = layui.upload;
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#avatarUpload' //绑定元素
+                ,url: "{{route('common.uploads')}}" //上传接口
+                ,data:{'_token':"{{csrf_token()}}"}
+                ,before: function(obj){
+                    layer.load(); //上传loading
+                }
+                ,done: function(res){
+                    //上传完毕回调
+                    layer.closeAll('loading'); //关闭loading
+                    console.log(res);
+                    if(res.data.flag == 'success'){
+                        //$("#avatar_val") = res.fiepach;
+                        $("#avatarSrc").val(res.data.fiepach);
+                        layer.msg(res.data.message, {icon: 1,time:2000});
+                    }else{
+                        layer.msg(res.message, {icon: 5,time:2000});
+                    }
+                }
+                ,error: function(index, upload){
+                    //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
+                    //当上传失败时，你可以生成一个“重新上传”的按钮，点击该按钮时，执行 upload() 方法即可实现重新上传
+                    layer.msg('网络错误，稍后重新上传', {icon: 5,time:2000});
+                }
+            });
+
+            form.render();
+
             form.on('submit(setmyinfo)', function(data){
                 var field = data.field;
                 $.ajax({

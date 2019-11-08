@@ -19,3 +19,7 @@ Route::get('/', function () {
 Auth::routes();
 
 //前台用户管理
+Route::group(['prefix'=>'user','namespace' => 'User'], function () {
+    Route::resource('managements', 'UserController', ['names' => 'user.managements']);//后台管理用户路由
+    Route::post('managements/getData','UserController@getData')->name('user.managements.getData');
+});

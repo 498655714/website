@@ -1,10 +1,13 @@
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 
-## 关于 CMS后台管理系统(基础版)
+## 关于 CMS后台管理系统(Frame基础版)(尚未开发完成)
 
-本系统是基于laravel5.5,layui-v2.4.5 制作的CMS后台管理系统基础版,用于快速开发网站、博客、新闻等基础框架。(尚未开发完成)
-
+本系统是基于laravel5.5,layui-v2.4.5 制作的CMS后台管理系统基础版,用于快速开发网站、博客、新闻等基础框架。框架包含以下扩展：
+ 
+  1. 权限管理使用 laravel-permission 扩展实现,具体可以参考官方地址：https://github.com/spatie/laravel-permission
+  2. 使用 laravel-lang:~3.0 作为汉化包，具体可以自行搜索帮助文档。
+  
 ## 安装步骤
 
  ##### 1. 执行以下命令,将项目克隆到本地 
