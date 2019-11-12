@@ -185,5 +185,7 @@ return [
         'keywords'              => '关键字',
         'copyright'             => '版权信息',
         'oldPassword'           => '原始密码',
+        'sort'                  => '排序',
+        'pid'                   => '父级ID',
     ],
 ];

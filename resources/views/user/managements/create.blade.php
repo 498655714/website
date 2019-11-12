@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title',' | 添加后台管理用户')
+@section('title',' | 添加用户')
 @section('css')
 @endsection
 @section('content')

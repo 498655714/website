@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title',' | 后台管理用户列表')
+@section('title',' | 用户列表')
 @section('css')
 @endsection
 @section('content')
@@ -119,7 +119,7 @@
                 if(layEvent === 'edit'){//编辑操作
                     layer.open({
                         type: 2
-                        ,title: '编辑后台用户'
+                        ,title: '编辑用户'
                         ,content: "managements/"+managements_id+'/edit'
                         ,maxmin: true
                         ,area: ['560px', '550px']

@@ -1,6 +1,7 @@
 <?php
-
-
+/**
+ * 注意：当在资源路由中使用其他方法，必须在资源路由之前进行注册路由
+ */
 //后台管理用户
 Route::group(['prefix'=>'admin','namespace' => 'Admin'], function () {
 
@@ -26,23 +27,27 @@ Route::group(['prefix'=>'admin','namespace' => 'Admin'], function () {
     Route::post('personal','AdminController@personalSave')->name('admin.personal.index');
     Route::get('setpass','AdminController@setPassword')->name('admin.personal.setpass');
     Route::post('setpass','AdminController@setPasswordUpdate')->name('admin.personal.setpass');
+
+    Route::match(['get', 'post'],'categories/getData','CategoryController@getData')->name('admin.categories.getData');
+    Route::resource('categories','CategoryController',['names'=>'admin.categories']);
+
     //超级管理员才拥有访问权限
     Route::group(['middleware' => ['role:super-admin']], function () {
         //权限
-        Route::resource('permissions','PermissionController',['names'=>'admin.permissions']);
         Route::post('permissions/getData','PermissionController@getData')->name('admin.permissions.getData');
+        Route::resource('permissions','PermissionController',['names'=>'admin.permissions']);
 
         //角色
-        Route::resource('roles','RoleController',['names'=>'admin.roles']);
         Route::post('roles/getData','RoleController@getData')->name('admin.roles.getData');
+        Route::resource('roles','RoleController',['names'=>'admin.roles']);
 
         //站点设置
         Route::get('websiteSetup/index','WebsiteSetupController@index')->name('admin.websiteSetup.index');
         Route::post('websiteSetup/store','WebsiteSetupController@store')->name('admin.websiteSetup.store');
 
         //后台管理用户
-        Route::resource('managements','AdminController',['names'=>'admin.managements']);//后台管理用户路由
         Route::post('managements/getData','AdminController@getData')->name('admin.managements.getData');
+        Route::resource('managements','AdminController',['names'=>'admin.managements']);//后台管理用户路由
 
     });
 

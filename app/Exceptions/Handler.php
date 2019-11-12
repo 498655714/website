@@ -93,7 +93,13 @@ class Handler extends ExceptionHandler
         if($request->expectsJson()){
             return response()->json(['message' => $exception->getMessage()], 401);
         }else{
-            echo  in_array('admin', $exception->guards())?  "<script>top.location.href='/admin/login'</script>" : "<script>top.location.href='/login'</script>";
+            if(in_array('admin', $exception->guards())){
+                echo "<script>top.location.href='/admin/login'</script>";
+            }else{
+                //如何做后台访问前台用户列表？
+                echo "<script>top.location.href='/login'</script>";
+            }
+
         }
     }
 }
