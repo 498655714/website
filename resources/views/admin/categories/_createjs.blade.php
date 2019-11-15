@@ -21,7 +21,7 @@ url:"{{ route('admin.categories.store') }}"
 ,type:'post'
 ,data: field
 ,beforeSend:function (XMLHttpRequest) {
-layer.load();
+layer.load(2);
 }
 ,success:function (res) {
 layer.closeAll('loading');

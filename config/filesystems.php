@@ -58,7 +58,7 @@ return [
             'driver' => 'local',
             //'root' => storage_path('app/uploads/'.date('Ymd')),
             //如果需要浏览器直接访问设置下面
-            'root' => public_path('uploads/'.date('Ymd')),
+            'root' => public_path('uploads/avatar'),
         ],
 
         'qiniu' => [

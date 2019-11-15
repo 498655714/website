@@ -98,12 +98,12 @@
                 ,url: "{{route('common.uploads')}}" //上传接口
                 ,data:{'_token':"{{csrf_token()}}"}
                 ,before: function(obj){
-                    layer.load(); //上传loading
+                    layer.load(2); //上传loading
                 }
                 ,done: function(res){
                     //上传完毕回调
                     layer.closeAll('loading'); //关闭loading
-                    console.log(res);
+                    //console.log(res);
                     if(res.data.flag == 'success'){
                         //$("#avatar_val") = res.fiepach;
                         $("#avatarSrc").val(res.data.fiepach);
@@ -116,7 +116,7 @@
                     //请求异常回调
                     layer.closeAll('loading'); //关闭loading
                     //当上传失败时，你可以生成一个“重新上传”的按钮，点击该按钮时，执行 upload() 方法即可实现重新上传
-                    layer.msg('网络错误，稍后重新上传', {icon: 5,time:2000});
+                    layer.msg('网络错误，请联系管理员', {icon: 5,time:2000});
                 }
             });
 
@@ -129,7 +129,7 @@
                     ,type:'post'
                     ,data: field
                     ,beforeSend:function (XMLHttpRequest) {
-                        layer.load();
+                        layer.load(2);
                     }
                     ,success:function (res) {
                         layer.closeAll('loading');

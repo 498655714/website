@@ -31,6 +31,10 @@ Route::group(['prefix'=>'admin','namespace' => 'Admin'], function () {
     Route::match(['get', 'post'],'categories/getData','CategoryController@getData')->name('admin.categories.getData');
     Route::resource('categories','CategoryController',['names'=>'admin.categories']);
 
+    Route::match(['get', 'post'],'articles/getData','ArticleController@getData')->name('admin.articles.getData');
+    Route::match(['post'],'articles/batchDestroy','ArticleController@batchDestroy')->name('admin.articles.batchDestroy');
+    Route::resource('articles','ArticleController',['names'=>'admin.articles']);
+
     //超级管理员才拥有访问权限
     Route::group(['middleware' => ['role:super-admin']], function () {
         //权限

@@ -187,5 +187,9 @@ return [
         'oldPassword'           => '原始密码',
         'sort'                  => '排序',
         'pid'                   => '父级ID',
+        'short_title'           => '简略标题',
+        'thumb'                 => '缩略图',
+        'writer'                => '作者',
+        'click'                 => '点击',
     ],
 ];

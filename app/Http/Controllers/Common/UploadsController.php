@@ -65,7 +65,7 @@ class UploadsController extends BaseController
         $res = Storage::disk('uploads')->put($newFile,file_get_contents($file->getRealPath()));
 
         if($res){
-            $fiepach = 'uploads/'.date('Ymd').'/'.$newFile;
+            $fiepach = 'uploads/avatar/'.$newFile;
         }else{
             $msg = $file->getErrorMessage();
             return $this->failed($msg,200);

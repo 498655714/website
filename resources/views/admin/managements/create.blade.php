@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="layui-form-item layui-hide">
-            <input type="button" lay-submit lay-filter="LAY-user-front-submit" id="managements_add" value="确认">
+            <input type="button" lay-submit lay-filter="managements_add" id="managements_add" value="确认">
         </div>
     </div>
 

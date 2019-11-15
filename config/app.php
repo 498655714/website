@@ -229,5 +229,15 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+    'flags' => [
+        'h' => '头条',
+        'c' => '推荐',
+        'f' => '幻灯',
+        'a' => '特荐',
+        's' => '滚动',
+        'b' => '加粗',
+        'p' => '图片',
+        'j' => '跳转',
+    ],
 
 ];
