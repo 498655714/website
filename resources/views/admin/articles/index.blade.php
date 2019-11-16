@@ -1,65 +1,72 @@
 @extends('layouts.app')
 @section('title',' | 文章列表')
 @section('css')
+    <style>
+        .layui-card-header .layui-icon {
+            position: absolute;
+            top: 0px;
+            margin-top: 0px;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="layui-fluid">
         <div class="layui-card">
             <div class="layui-card-header layuiadmin-card-header-auto  ">
-                <div class="layui-form layui-form-pane">
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">文章ID</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="id" placeholder="请输入" value="{{old('id')}}" autocomplete="off" class="layui-input">
+                <div class="layui-form layui-form-pane" >
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">文章ID</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="id" placeholder="请输入" value="{{old('id')}}" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">作者</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="writer" placeholder="请输入" value="{{old('writer')}}" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">标题</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="title" placeholder="请输入"  value="{{old('title')}}" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">推荐位</label>
+                            <div class="layui-input-block" style="height: 30px">
+                                <select name="flag">
+                                    <option value=""></option>
+                                    @foreach($flags as $key=>$flag)
+                                        <option value="{{$key}}"  {{ old('flag') == $key ? 'selected' : ''}}>{{$flag.'['.$key.']'}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">文章栏目</label>
+                            <div class="layui-input-inline">
+                                <select name="cate_id">
+                                    <option value=""></option>
+                                    @foreach($categories as $key=>$category)
+                                        <option value="{{ $category['id'] }}"  {{ old('cate_id') == $category['id'] ? 'selected' : ''}}>{{ $category['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">创建时间</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="created_at" class="layui-input" id="create-laydate-range-date" placeholder=" - ">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="articles_list_search" id="articles_list_search">
+                                <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                            </button>
                         </div>
                     </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">作者</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="writer" placeholder="请输入" value="{{old('writer')}}" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">标题</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="title" placeholder="请输入"  value="{{old('title')}}" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-
-                    <div class="layui-inline">
-                        <label class="layui-form-label">文章栏目</label>
-                        <div class="layui-input-inline">
-                            <select name="cate_id">
-                                <option value=""></option>
-                                @foreach($categories as $key=>$category)
-                                    <option value="{{ $category['id'] }}"  {{ old('cate_id') == $category['id'] ? 'selected' : ''}}>{{ $category['name'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">创建时间</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="created_at" class="layui-input" id="create-laydate-range-date" placeholder=" - ">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="articles_list_search">
-                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                        </button>
-                    </div>
-                </div>
-{{--                <div class="layui-form-item">--}}
-{{--                    <div class="layui-inline">--}}
-{{--                        <label class="layui-form-label">推荐位</label>--}}
-{{--                        <div class="layui-input-block">--}}
-{{--                            @foreach($flags as $key=>$flag)--}}
-{{--                                <input type="checkbox" name="flag[]" value="{{ $key }}" title="{{ $flag }}[{{ $key }}]" @if(old('flags')){{ in_array($key,old('flags')) ? 'checked' : ''}}@endif lay-skin="primary">--}}
-{{--                            @endforeach--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
                 </div>
             </div>
 

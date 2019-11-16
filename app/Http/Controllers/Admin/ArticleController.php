@@ -185,11 +185,16 @@ class ArticleController extends BaseController
                 ['created_at','<',$created[1]]
             ]);
         }
+        //推荐位
+        if(isset($input['flag']) && !empty($input['flag'])){
+            $articles = $articles->where('flag','like','%'.$input['flag'].'%');
+        }
+
         //只有超管可以查看所有文章
         if(!Auth::user()->hasAnyRole(['super-admin'])){
             $articles = $articles->where('admin_id','=',Auth::user()->id);
         }
-        $articles_list = $articles->paginate($input['limit'],$field,null,$input['page'])->toArray();//获取所有权限;
+        $articles_list = $articles->orderBy('id','desc')->paginate($input['limit'],$field,null,$input['page'])->toArray();//获取所有权限;
         //整理数据
         foreach($articles_list['data'] as $key => $article){
             $tmp = '';
