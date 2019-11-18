@@ -19,21 +19,30 @@ Route::group(['prefix'=>'admin','namespace' => 'Admin'], function () {
     Route::get('password/reset/{token}','Auth\ResetPasswordController@showResetForm')->name('admin.password.reset');
     Route::post('password/reset','Auth\ResetPasswordController@reset')->name('admin.password.reset');
 
-    Route::get('home', 'HomeController@index')->name('admin.home');//后台主页
-    Route::get('home/console', 'HomeController@console')->name('admin.console');//后台控制台
+    //后台主页
+    Route::get('home', 'HomeController@index')->name('admin.home');
+    //后台控制台
+    Route::get('home/console', 'HomeController@console')->name('admin.console');
 
-
+    //个人资料设置、更新密码
     Route::get('personal','AdminController@personalIndex')->name('admin.personal.index');
     Route::post('personal','AdminController@personalSave')->name('admin.personal.index');
     Route::get('setpass','AdminController@setPassword')->name('admin.personal.setpass');
     Route::post('setpass','AdminController@setPasswordUpdate')->name('admin.personal.setpass');
 
+    //分类管理
     Route::match(['get', 'post'],'categories/getData','CategoryController@getData')->name('admin.categories.getData');
     Route::resource('categories','CategoryController',['names'=>'admin.categories']);
 
+    //文章管理
     Route::match(['get', 'post'],'articles/getData','ArticleController@getData')->name('admin.articles.getData');
-    Route::match(['post'],'articles/batchDestroy','ArticleController@batchDestroy')->name('admin.articles.batchDestroy');
+    Route::post('articles/batchDestroy','ArticleController@batchDestroy')->name('admin.articles.batchDestroy');
     Route::resource('articles','ArticleController',['names'=>'admin.articles']);
+
+    //评论管理
+    Route::match(['get','post'],'comments/getData','CommentController@getData')->name('admin.comments.getData');
+    Route::post('comments/batchDestroy','CommentController@batchDestroy')->name('admin.comments.batchDestroy');
+    Route::resource('comments','CommentController',['names'=>'admin.comments']);
 
     //超级管理员才拥有访问权限
     Route::group(['middleware' => ['role:super-admin']], function () {
@@ -49,7 +58,7 @@ Route::group(['prefix'=>'admin','namespace' => 'Admin'], function () {
         Route::get('websiteSetup/index','WebsiteSetupController@index')->name('admin.websiteSetup.index');
         Route::post('websiteSetup/store','WebsiteSetupController@store')->name('admin.websiteSetup.store');
 
-        //后台管理用户
+        //后台用户管理
         Route::post('managements/getData','AdminController@getData')->name('admin.managements.getData');
         Route::resource('managements','AdminController',['names'=>'admin.managements']);//后台管理用户路由
 

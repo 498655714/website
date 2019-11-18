@@ -11,7 +11,7 @@ class Category extends Model
     /**
      * @var string
      */
-    protected $guard = 'admin';
+    //protected $guard = 'admin';
 
     protected $table='categories';
     /**
@@ -33,4 +33,13 @@ class Category extends Model
 
     ];
 
+    //栏目对应文章
+    public function articles(){
+        return $this->hasMany('articles','cate_id','id');
+    }
+
+    //栏目对应评论
+    public function comments(){
+        return $this->hasMany('comments','cate_id','id');
+    }
 }

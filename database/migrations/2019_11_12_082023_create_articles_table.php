@@ -20,7 +20,9 @@ class CreateArticlesTable extends Migration
             $table->string('thumb',200)->nullable()->comment('缩略图');
             $table->string('flag',50)->nullable()->comment('推荐位 头条[h] 推荐[c] 幻灯[f] 特荐[a] 滚动[s] 加粗[b] 图片[p] 跳转[j] ');
             $table->integer("cate_id",false,true)->comment('分类id');
-            $table->integer('admin_id',false,true)->comment('编辑人id');
+            $table->foreign('cate_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->string('guard_name')->comment('守卫标识');
+            $table->integer('writer_id',false,true)->comment('编辑人id');
             $table->string('writer',30)->comment('作者');
             $table->string('keywords',100)->comment('关键字');
             $table->string('description',255)->comment('内容摘要');

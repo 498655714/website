@@ -12,7 +12,7 @@ class ArticleController extends BaseController
 {
     public function __construct()
     {
-        $this->middleware(['auth:admin']);
+        //$this->middleware();
     }
 
     /**
@@ -22,7 +22,7 @@ class ArticleController extends BaseController
      */
     public function index()
     {
-        $flags = config('app.flags');
+        $flags = config('site.flags');
         $categories = Category::get()->toArray();
         $categories = $this->recursiveArr($categories,0);//整理类目列表
         return view('admin.articles.index',compact('flags','categories'));
@@ -36,7 +36,7 @@ class ArticleController extends BaseController
     public function create()
     {
         //
-        $flags = config('app.flags');
+        $flags = config('site.flags');
         $categories = Category::get()->toArray();
         $categories = $this->recursiveArr($categories,0);//整理类目列表
         return view('admin.articles.create',compact('flags','categories'));
@@ -60,9 +60,12 @@ class ArticleController extends BaseController
             'keywords'=>'required|string|max:100',
             'description'=>'required|string|max:255',
         ]);
+        $current_guards = $this->getCurrentGuard();
+
         $input = $request->only(['title', 'short_title', 'thumb','writer','cate_id','keywords','description','content']);
         $input['flag'] = implode(',',$request['flag']);
-        $input['admin_id']  = Auth::user()->id;
+        $input['writer_id']  = Auth::guard($current_guards)->user()->id;
+        $input['guard_name']  = $current_guards;
         $category = new Article();
         $category->fill($input)->save();
 
@@ -89,7 +92,7 @@ class ArticleController extends BaseController
     public function edit($id)
     {
         //
-        $flags = config('app.flags');
+        $flags = config('site.flags');
         $categories = Category::get()->toArray();
         $categories = $this->recursiveArr($categories,0);//整理类目列表
         $article = Article::findOrFail($id);
@@ -132,7 +135,9 @@ class ArticleController extends BaseController
     {
         //
         $category = Article::findOrFail($id);
-        $category->delete();
+        $input = ['is_deleted'=>1];
+        $category->fill($input)->save(); //软删除
+        //$category->delete();
         return $this->success('删除成功');
     }
 
@@ -143,8 +148,12 @@ class ArticleController extends BaseController
      */
     public function batchDestroy(Request $request){
         $ids = $request['ids'];
-        $category = new Article();
-        $category->destroy($ids);
+        $input = ['is_deleted'=>1];
+        foreach($ids as $key => $id){
+            $category = Article::findOrFail($id);
+            $category->fill($input)->save(); //软删除
+        }
+        //$category->destroy($ids);
         return $this->success('删除成功');
     }
     /**
@@ -154,12 +163,12 @@ class ArticleController extends BaseController
      */
     public function getData(Request $request){
         $input = $request->all();
-        $field = ['id','title', 'short_title', 'thumb','flag','cate_id','admin_id','writer'
+        $field = ['id','title', 'short_title', 'thumb','flag','cate_id','guard_name','writer_id','writer'
             ,'keywords','description','content','click','is_deleted','created_at','updated_at'];
         $articles = new Article();
         $categories = Category::all()->toArray();
         $categories = empty($categories) ? [] : array_column($categories,'name','id');
-        $flags = config('app.flags');
+        $flags = config('site.flags');
 
         //标题
         if(isset($input['title']) && !empty($input['title'])){
@@ -189,11 +198,16 @@ class ArticleController extends BaseController
         if(isset($input['flag']) && !empty($input['flag'])){
             $articles = $articles->where('flag','like','%'.$input['flag'].'%');
         }
-
-        //只有超管可以查看所有文章
-        if(!Auth::user()->hasAnyRole(['super-admin'])){
-            $articles = $articles->where('admin_id','=',Auth::user()->id);
+        //只有超管可以查看所有文章,其他人只能查看自己文章
+        //判断当前guard,只判断当前登录的用户
+        $current_guards = $this->getCurrentGuard();
+        if(!Auth::guard($current_guards)->user()->hasAnyRole(['super-admin'])){
+            $articles = $articles->where('guard_name','=',$current_guards);
+            $articles = $articles->where('writer_id','=',Auth::guard($current_guards)->id);
         }
+
+        $articles->where('is_deleted','=',0);
+
         $articles_list = $articles->orderBy('id','desc')->paginate($input['limit'],$field,null,$input['page'])->toArray();//获取所有权限;
         //整理数据
         foreach($articles_list['data'] as $key => $article){
@@ -215,29 +229,6 @@ class ArticleController extends BaseController
         return \response()->json($data);
     }
 
-    //递归处理栏目列表
-    public function recursiveArr($arr,$pid=0,$pre_pid=0,$prefix=''){
-        static $list = [];
-        foreach($arr as $key => $value){
-            if($value['pid'] == $pid){
-                if($pre_pid == $pid){
-                    $prefix .= '';
-                }else{
-                    $pre_pid = $pid;
-                    $prefix .= '—';
-                }
-                if($pid === 0){
-                    $value['name'];
-                }else{
-                    $value['name'] = $prefix.$value['name'];
-                }
-                $list[] = $value;
-                unset($arr[$key]);
-                $this->recursiveArr($arr,$value['id'],$pre_pid,$prefix);
-            }
-        }
 
-        return $list;
-    }
 
 }

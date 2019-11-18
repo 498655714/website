@@ -191,5 +191,7 @@ return [
         'thumb'                 => '缩略图',
         'writer'                => '作者',
         'click'                 => '点击',
+        'article_id'            => '文章ID',
+        'cate_id'               => '文章栏目ID',
     ],
 ];

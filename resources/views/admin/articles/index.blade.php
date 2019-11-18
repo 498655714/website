@@ -1,13 +1,6 @@
 @extends('layouts.app')
 @section('title',' | 文章列表')
 @section('css')
-    <style>
-        .layui-card-header .layui-icon {
-            position: absolute;
-            top: 0px;
-            margin-top: 0px;
-        }
-    </style>
 @endsection
 @section('content')
     <div class="layui-fluid">

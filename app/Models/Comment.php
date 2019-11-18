@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Article extends Model
+class Comment extends Model
 {
+
     //
 
     /**
@@ -13,7 +14,7 @@ class Article extends Model
      */
     //protected $guard = 'admin';
 
-    protected $table='articles';
+    protected $table='comments';
     /**
      * The attributes that are mass assignable.
      *
@@ -21,8 +22,7 @@ class Article extends Model
      *
      */
     protected $fillable = [
-        'title', 'short_title', 'thumb','flag','cate_id','guard_name','writer_id','writer'
-        ,'keywords','description','content','click','is_deleted'
+        'article_id', 'cate_id', 'guard_name','reviewer_id','reviewer_name','ip','context'
     ];
 
     /**
@@ -32,11 +32,12 @@ class Article extends Model
      */
     protected $hidden = [
     ];
-    //文章对应评论
-    public function comments(){
-        return $this->hasMany('comments','article_id','id');
+
+    //评论对应的文章
+    public function article(){
+        return $this->belongsTo('articles','article_id','id');
     }
-    //文章对应栏目
+    //评论对应的文章栏目
     public function category(){
         return $this->belongsTo('categories','cate_id','id');
     }
