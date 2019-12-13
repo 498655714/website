@@ -26,6 +26,8 @@ class ResetPassword extends Rp implements ShouldQueue
 //            ->action('重设密码', url(config('app.url').$notifiable->getGuard().'/password/reset/'.$this->token))
             ->line('如果您未请求重置密码，则无需操作。')
             ->level('green');
+        
     }
+
 
 }

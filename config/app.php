@@ -125,7 +125,7 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
-    'del_pass' => env('DEL_PASS','123'),
+    'del_pass' => env('DEL_PASS','123'),//删除时要输入的密码
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
